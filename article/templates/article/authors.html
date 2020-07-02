@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <hr>
+    <table class="table table-primary table-hover table-striped table-bordered">
+    <thead class="thead-primary">
+        <tr>
+            <th>Name</th>
+            <th>Articles</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for author in authors_all %}
+            <tr>
+                <h2>
+                    <td><a href="{% url 'profile' author.id %}">{{ author.name }}</a></td>
+                    <td>{{ author.articles.count }}</td>
+                </h2>
+        {% endfor %}
+    </tbody>
+    </table>
+   
+
+    
+{% endblock %}

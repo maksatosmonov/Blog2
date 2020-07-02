@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  
+<div>
+    <h3>NAME: {{ author.name }}</h3>
+    <h3>PUBLICATIONS: {{ author.articles }}</h3>
+    {% if author.photo %}
+        <img src="{{ author.photo.url }}" width="50%">
+    {% endif %}
+ </div>       
+{% endblock %}

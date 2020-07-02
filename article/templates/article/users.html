@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <hr>
+    <table class="table table-primary table-hover table-striped table-bordered">
+    <thead class="thead-primary">
+        <tr>
+            <th>Login</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users_all %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.get_full_name }}</td>
+            </tr> 
+        {% endfor %}
+    </tbody>
+    </table>
+   
+
+    
+{% endblock %}

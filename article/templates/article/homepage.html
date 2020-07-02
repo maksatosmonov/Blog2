@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container" style="margin-top:40px">
+<div class="row">
+<div class="col-sm-8">
+
+    {% for a in articles %}
+<div>
+    <br>
+    <h2>
+        <a href="{% url 'article' a.id %}">
+        {{ a.title }}</a>
+    </h2>
+        <div>{{ a.text}}>
+    
+            
+        </div>
+    
+    <div>
+        <a href="{% url 'authors' %}">{{ a.author }}</a>
+    </div>
+    <b>Read count: {{ a.readers.count }}</b>
+    <b>Like: {{ a.likes }}</b>
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h2>{{ article.title }}</h2>
+    {% if article.picture %}
+        <img width="30%" src="{{ article.picture.url }}">
+    {% endif %}
+    <hr>
+    <div>{{ article.text|escape|linebreaks }}</div>
+    <i>Author: {{ article.author }}</i>
+    <i>Like: {{ article.likes }}</i>
+    <div>Read: {{ article.views }}</div>
+    <div>Publication date: {{ article.publication_date|date:"d.m.Y" }}</div>
+    <div>Updated date: {{ article.updated_date }}</div>
+    <ul>
+        {% for reader in article.readers.all %}
+            <li>{{ reader }}</li>
+    </ul>
+        {% endfor %}
+    <hr>
+    <p>{{ article.comments.count }}</p>
+    {% for commen in comment%}
+       <p> {{ commen.text}} </p>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <button name='delete_btn' class="btn btn-lg btn-danger">DELET</button> 
+    </form>
+    <br>
+        <a href="{% url 'edit-article' article.id %}" class="btn btn-lg btn-warning">EDIT</a>
+    <hr>
+    <form  method="POST">
+        {% csrf_token %}
+       {% bootstrap_form form %}
+        <button name="add_comment_btn" class="btn btn-lg btn-info">ADD COMMENT</button>
+    </form>
+        
+    <hr>
+
+    <h3>COMMENTS</h3>
+    {% for comment in article.comments.all %}
+        <div>{{ comment.text }}</div>
+        <i>{{ comment.user.username }}</i>
+        <p>
+            <a href="{% url 'edit-comment' comment.id %}">EDIT COMMENT</a>|
+            <a href="{% url 'delete-comment' comment.id %}">DELETE COMMENT</a>|
+        </p> 
+        <hr>
+
+    {% endfor %}
+
+{% endblock %}

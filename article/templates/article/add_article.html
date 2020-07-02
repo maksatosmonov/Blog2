@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    <h3>ADD ARTICLE</h3>
+    <form method="POST" enctype="multipart/form-data" style="width: 70%; margin: auto;">
+        {% csrf_token %}
+        
+        {% bootstrap_form form %}
+        <button>Confirm</button>
+    </from>
+
+{% endblock %}

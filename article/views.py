@@ -8,17 +8,19 @@ from django.db.models import Q
 def homepage(request):
     if request.method == 'POST':
         key = request.POST.get("key_word")
-        articles = Article.objects.filter(active=True).filter(title__contains=key) | Article.objects.filter(active=True).filter(text__contains=key) | Article.objects.filter(active=True).filter(author__name__contains=key) | Article.objects.filter(active=True).filter(comments__text__contains=key)
+        articles = Article.objects.filter(active=True).filter(title__contains=key) \
+                | Article.objects.filter(active=True).filter(text__contains=key) \
+                | Article.objects.filter(active=True).filter(author__name__contains=key) \
+                | Article.objects.filter(active=True).filter(comments__text__contains=key) 
     else:
         if "key_word" in request.GET:
             key =request.GET.get("key_word")
             articles = Article.objects.filter(active=True).order_by("title")
         else:
             articles = Article.objects.filter(active=True)
+   
+    return render(request, "article/homepage.html", {"articles":articles})
 
-    
-    return render(request, "article/homepage.html", 
-    {"articles":articles})
 
 def article(request, id):
     article = Article.objects.get(id=id)
@@ -45,11 +47,7 @@ def article(request, id):
     context["article"] = article
     context["form"] = CommentForm()
     
-    return render(
-        request,
-        "article/article.html",
-        context
-    )
+    return render(request, "article/article.html", context)
 
 
 def add_article(request):
@@ -61,6 +59,7 @@ def add_article(request):
 
     form = ArticleForm()
     return render(request, "article/add_article.html", {"form":form})
+
 
 def edit_article(request, id):
     article = Article.objects.get(id=id)
@@ -95,6 +94,7 @@ def add_author(request):
 def profile(request, id):
     author = Author.objects.get(id=id)
     return render(request, "article/profile.html", {"author": author})
+
 
 def users(request):
     context = {}

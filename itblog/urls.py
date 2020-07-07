@@ -32,6 +32,5 @@ urlpatterns = [
     path("profile/<int:id>/", profile, name="profile"),
     path("comment/edit/<int:id>/", edit_comment, name="edit-comment"),
     path("comment/delete/<int:id>/", delete_comment, name="delete-comment"),
-
-    
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

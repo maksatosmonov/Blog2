@@ -8,22 +8,26 @@ class Article(models.Model):
     text = models.TextField()
     likes = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
-    author = models.ForeignKey( to='Author', 
-                                on_delete=models.CASCADE,
-                                related_name="articles", 
-                                null=True, 
-                                blank=True )
+    author = models.ForeignKey( 
+            to='Author', 
+            on_delete=models.CASCADE,
+            related_name="articles", 
+            null=True, 
+            blank=True)
 
-    readers = models.ManyToManyField(   to=User, 
-                                        related_name="article", 
-                                        null=True, 
-                                        blank=True)
-
+    readers = models.ManyToManyField(   
+            to=User, 
+            related_name="article", 
+            null=True, 
+            blank=True)
 
     publication_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
-    picture = models.ImageField(null=True, blank=True, upload_to="articles/" + datetime.today().strftime("%Y%m%d"))
+    picture = models.ImageField(
+            null=True, 
+            blank=True, 
+            upload_to="articles/" + datetime.today().strftime("%Y%m%d"))
     dislake = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
     reposts = models.IntegerField(default=0)
@@ -35,13 +39,16 @@ class Article(models.Model):
     class Meta:
         verbose_name = "Статью"
         verbose_name_plural = "Статьи"
-    
+
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to= "author_photo", null=True, blank=True)
-    user = models.OneToOneField(to=User, on_delete=models.SET_NULL, related_name="author", 
-    null=True, blank=True)
+    photo = models.ImageField(upload_to="author_photo", null=True, blank=True)
+    user = models.OneToOneField(
+            to=User, 
+            on_delete=models.SET_NULL, 
+            related_name="author",
+            null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -50,10 +57,17 @@ class Author(models.Model):
         verbose_name = "Автора"
         verbose_name_plural = "Автор"
 
+
 class Comment(models.Model):
-    article = models.ForeignKey(to=Article, on_delete=models.CASCADE, related_name="comments")
+    article = models.ForeignKey(
+            to=Article, 
+            on_delete=models.CASCADE, 
+            related_name="comments")
     text = models.TextField()
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(
+            to=User, 
+            on_delete=models.CASCADE, 
+            related_name="comments")
 
     def __str__(self):
         return self.user.username + " - " + self.text
@@ -63,8 +77,9 @@ class Comment(models.Model):
         verbose_name_plural = "Комментарии"
         ordering = ["user"]
 
+
 class Tag(models.Model):
-    name= models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
